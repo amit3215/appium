@@ -378,6 +378,75 @@ exports.mobileSwipe = function(req, res) {
   }
 };
 
+exports.mobilePinchClose = function(req, res) {
+  req.body = _.defaults(req.body, {
+  	startX: 0.5
+    , startY: 0.5
+    , endX: 0.5
+    , endY: 0.5
+    , duration: 0.8
+    , element: null
+  });
+  var element = req.body.element
+    , duration = req.body.duration
+    , startX = req.body.startX
+    , startY = req.body.startY
+    , endX = req.body.endX
+    , endY = req.body.endY;
+
+  if(checkMissingParams(res, {endX: endX, endY: endY})) {
+    req.device.pinchClose(startX, startY, endX, endY, duration,
+        element, getResponseHandler(req, res));
+  }
+};
+
+
+exports.mobilePinchOpen = function(req, res) {
+  req.body = _.defaults(req.body, {
+  	startX: 0.5
+    , startY: 0.5
+    , endX: 0.5
+    , endY: 0.5
+    , duration: 0.8
+    , element: null
+  });
+  var element = req.body.element
+    , duration = req.body.duration
+    , startX = req.body.startX
+    , startY = req.body.startY
+    , endX = req.body.endX
+    , endY = req.body.endY;
+
+  if(checkMissingParams(res, {endX: endX, endY: endY})) {
+    req.device.pinchOpen(startX, startY, endX, endY, duration,
+        element, getResponseHandler(req, res));
+  }
+};
+
+exports.mobileRotation = function(req, res) {
+  req.body = _.defaults(req.body, {
+  	x: 0.5
+    , y: 0.5
+    , radius: 0.5
+    , rotation: 3.14159265359
+    , touchCount: 2
+    , duration: 1
+    , element: null
+  });
+  var element = req.body.element
+    , duration = req.body.duration
+    , x = req.body.x
+    , y = req.body.y
+    , radius = req.body.radius
+    , touchCount = req.body.touchCount
+    , rotation = req.body.rotation;
+
+  if(checkMissingParams(res, {x: x, y: y})) {
+    req.device.rotateWithOptions(x, y, radius, rotation, duration, touchCount,
+        element, getResponseHandler(req, res));
+  }
+};
+
 exports.mobileScrollTo = function(req, res) {
   var elementId = req.body.element;
   req.device.scrollTo(elementId, getResponseHandler(req, res));
@@ -863,6 +932,9 @@ var mobileCmdMap = {
   , 'waitForPageLoad': exports.waitForPageLoad
   , 'currentActivity': exports.getCurrentActivity
   , 'findElementNameContains': exports.findElementNameContains
+  , 'pinchClose':exports.mobilePinchClose
+  , 'pinchOpen':exports.mobilePinchOpen
+  , 'rotateWithOptions':exports.mobileRotation
 };
 
 exports.produceError = function(req, res) {

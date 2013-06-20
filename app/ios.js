@@ -1551,6 +1551,42 @@ IOS.prototype.swipe = function(startX, startY, endX, endY, duration, touchCount,
   });
 };
 
+IOS.prototype.pinchClose = function(startX, startY, endX, endY, duration, elId, cb) {
+  var command;
+  if (elId) {
+    command = ["au.getElement('", elId, "').pinchCloseFromToForDuration(", startX, ',', startY, ',',
+      endX, ',', endY, ',', duration, ")"].join('');
+  } else {
+  	var fromPointObject = {'x' : startX, 'y' : startY};
+  	var toPointObject = {'x' : endX, 'y' : endY};
+    this.proxy("target.pinchCloseFromToForDuration("+ JSON.stringify(fromPointObject) + "," + JSON.stringify(toPointObject) + "," + duration +")", cb);
+  } 
+};
+
+IOS.prototype.pinchOpen = function(startX, startY, endX, endY, duration, elId, cb) {
+  var command;
+  if (elId) {
+    command = ["au.getElement('", elId, "').pinchOpenFromToForDuration(", startX, ',', startY, ',',
+      endX, ',', endY, ',', duration, ")"].join('');
+  } else {
+  	var fromPointObject = {'x' : startX, 'y' : startY};
+  	var toPointObject = {'x' : endX, 'y' : endY};
+    this.proxy("target.pinchOpenFromToForDuration("+ JSON.stringify(fromPointObject) + "," + JSON.stringify(toPointObject) + "," + duration +")", cb);
+  } 
+};
+
+IOS.prototype.rotateWithOptions = function(x, y, radius, rotation, duration, touchCount, elId, cb) {
+  var command;
+  if (elId) {
+    command = ["au.getElement('", elId, "').rotateWithOptions(", startX, ',', startY, ',',
+      endX, ',', endY, ',', duration, ")"].join('');
+  } else {
+  	var location = {'x' : x, 'y' : y};
+  	var options = {'duration' : duration, 'radius' : radius, 'rotation' : rotation, 'touchCount' : touchCount};
+    this.proxy("target.rotateWithOptions("+ JSON.stringify(location) + "," + JSON.stringify(options) + ")", cb);
+  } 
+};
+
 IOS.prototype.flick = function(startX, startY, endX, endY, touchCount, elId, cb) {
   var command;
   if (elId) {
